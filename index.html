@@ -3,386 +3,327 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Abi Hayat - Ro'yxatdan o'tish</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <title>Аби Ҳаят - Диабет Хавфи</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-
-        body {
-            font-family: 'Montserrat', sans-serif;
-            background-color: #f0f9f4;
-            color: #333;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            background-image: linear-gradient(135deg, #f0f9f4 0%, #e6f4ea 100%);
-        }
-
-        .container {
-            background: #ffffff;
-            width: 100%;
-            max-width: 480px;
-            padding: 40px 30px;
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(39, 174, 96, 0.15);
-            text-align: center;
-            margin: 20px;
-            border-top: 5px solid #27ae60;
-            position: relative;
-        }
-
-        .logo {
-            font-size: 26px;
-            font-weight: 800;
-            color: #27ae60;
-            margin-bottom: 15px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
+        body { font-family: 'Montserrat', sans-serif; background: linear-gradient(135deg, #1a5c3a 0%, #27ae60 50%, #2ecc71 100%); min-height: 100vh; overflow-x: hidden; }
+        .progress-container { position: fixed; top: 0; left: 0; width: 100%; height: 6px; background: rgba(255,255,255,0.2); z-index: 10000; }
+        .progress-bar { height: 100%; background: linear-gradient(90deg, #e74c3c, #c0392b); transition: width 0.5s ease; }
+        .quiz-container { max-width: 550px; margin: 0 auto; padding: 100px 20px 60px; min-height: 100vh; }
+        .quiz-card { background: #fff; border-radius: 25px; padding: 35px 25px; box-shadow: 0 25px 80px rgba(0,0,0,0.3); width: 100%; display: none; animation: slideIn 0.5s ease; }
+        .quiz-card.active { display: block; }
+        @keyframes slideIn { from { opacity: 0; transform: translateX(30px); } to { opacity: 1; transform: translateX(0); } }
+        .logo { font-size: 28px; font-weight: 900; color: #27ae60; text-align: center; margin-bottom: 25px; letter-spacing: 2px; }
         .logo span { color: #2ecc71; }
-
-        h1 { font-size: 20px; margin-bottom: 10px; color: #2c3e50; font-weight: 700; }
-        p { font-size: 13px; color: #7f8c8d; margin-bottom: 25px; }
-
-        .form-group { margin-bottom: 15px; text-align: left; }
-        label { font-size: 12px; font-weight: 600; color: #555; margin-bottom: 6px; display: block; margin-left: 5px; }        input, select {
-            width: 100%;
-            padding: 14px 15px;
-            border: 1px solid #e1e1e1;
-            background-color: #f9f9f9;
-            border-radius: 12px;
-            font-size: 15px;
-            transition: 0.3s;
-            outline: none;
-            font-family: 'Montserrat', sans-serif;
-            color: #333;
-            appearance: none;
-        }
-
-        .select-wrapper { position: relative; }
-        .select-wrapper::after {
-            content: '▼';
-            font-size: 10px;
-            color: #27ae60;
-            position: absolute;
-            right: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            pointer-events: none;
-        }
-
-        input:focus, select:focus {
-            background-color: #fff;
-            border-color: #27ae60;
-            box-shadow: 0 0 0 4px rgba(39, 174, 96, 0.1);
-        }
-
-        .phone-input-group {
-            display: flex;
-            border: 1px solid #e1e1e1;
-            border-radius: 12px;
-            background-color: #f9f9f9;
-            overflow: hidden;
-            transition: 0.3s;
-        }
-        .phone-input-group:focus-within {
-            background-color: #fff;
-            border-color: #27ae60;
-            box-shadow: 0 0 0 4px rgba(39, 174, 96, 0.1);
-        }
-        .phone-prefix {
-            background-color: #e8f5e9;
-            color: #27ae60;
-            padding: 14px 10px;
-            font-weight: 600;            display: flex;
-            align-items: center;
-            border-right: 1px solid #e1e1e1;
-            font-size: 15px;
-        }
-        .phone-input-group input {
-            border: none;
-            background: transparent;
-            border-radius: 0;
-            padding: 14px 10px;
-            flex: 1;
-        }
-        .phone-input-group input:focus { box-shadow: none; }
-
-        button.submit-btn {
-            width: 100%;
-            padding: 16px;
-            margin-top: 10px;
-            background: linear-gradient(90deg, #27ae60 0%, #2ecc71 100%);
-            color: white;
-            border: none;
-            border-radius: 12px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: 0.3s;
-            box-shadow: 0 5px 15px rgba(39, 174, 96, 0.3);
-        }
-
-        button.submit-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(39, 174, 96, 0.4);
-        }
-        
-        button.submit-btn:disabled {
-            background: #ccc;
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
-        }
-
-        .success-message {
-            display: none;
-            background-color: #e8f8f5;
-            border: 1px solid #27ae60;
-            color: #27ae60;
-            padding: 30px 20px;
-            border-radius: 12px;
-            margin-top: 20px;
-            animation: fadeIn 0.5s ease;        }
-        .success-message h3 {
-            margin-bottom: 10px;
-            font-size: 20px;
-            color: #27ae60;
-        }
-        .success-message p {
-            font-size: 15px;
-            color: #2c3e50;
-            margin-bottom: 0;
-            line-height: 1.5;
-        }
-        .success-icon {
-            font-size: 50px;
-            margin-bottom: 15px;
-            display: block;
-        }
-
-        .error-message {
-            display: none;
-            background-color: #ffe6e6;
-            border: 1px solid #e74c3c;
-            color: #e74c3c;
-            padding: 15px;
-            border-radius: 12px;
-            margin-top: 15px;
-            font-size: 13px;
-            text-align: left;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .call-section {
-            margin-top: 30px;
-            padding-top: 20px;
-            border-top: 1px dashed #ccc;
-        }
-        .call-text {
-            font-size: 13px;
-            color: #555;
-            margin-bottom: 10px;
-            font-weight: 500;
-        }
-        .call-btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;            background-color: #fff;
-            color: #27ae60;
-            border: 2px solid #27ae60;
-            padding: 10px 20px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 14px;
-            transition: 0.3s;
-            gap: 8px;
-        }
-        .call-btn:hover {
-            background-color: #27ae60;
-            color: #fff;
-        }
-        .phone-display {
-            font-size: 16px;
-            font-weight: 700;
-            color: #333;
-            margin-bottom: 15px;
-            display: block;
-            letter-spacing: 1px;
-        }
-
-        .footer-note {
-            margin-top: 25px;
-            font-size: 11px;
-            color: #bdc3c7;
-        }
-        
-        .disclaimer {
-            margin-top: 10px;
-            font-size: 10px;
-            color: #95a5a6;
-            font-style: italic;
-            border-top: 1px solid #eee;
-            padding-top: 10px;
-        }
+        .step-number { font-size: 11px; color: #95a5a6; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px; font-weight: 700; text-align: center; }
+        .question { font-size: 20px; color: #2c3e50; margin-bottom: 20px; font-weight: 800; line-height: 1.4; text-align: center; }
+        .stat-box { background: linear-gradient(135deg, #fadbd8 0%, #f5b7b1 100%); border-left: 5px solid #e74c3c; padding: 20px; border-radius: 15px; margin-bottom: 20px; box-shadow: 0 5px 15px rgba(231,76,60,0.2); }
+        .stat-box.warning { background: linear-gradient(135deg, #fdebd0 0%, #f8c471 100%); border-left-color: #e67e22; }
+        .stat-box.danger { background: linear-gradient(135deg, #fadbd8 0%, #f1948a 100%); border-left-color: #c0392b; }
+        .stat-box.critical { background: linear-gradient(135deg, #8b0000 0%, #dc143c 100%); border-left-color: #8b0000; color: #fff; }
+        .stat-icon { font-size: 40px; text-align: center; margin-bottom: 15px; }
+        .stat-title { font-size: 15px; font-weight: 800; color: #c0392b; margin-bottom: 12px; text-align: center; text-transform: uppercase; }
+        .stat-box.critical .stat-title { color: #fff; }
+        .stat-number { font-size: 42px; font-weight: 900; color: #e74c3c; text-align: center; margin: 10px 0; text-shadow: 2px 2px 4px rgba(0,0,0,0.1); }
+        .stat-box.critical .stat-number { color: #fff; }
+        .stat-text { font-size: 13px; color: #555; line-height: 1.6; text-align: center; margin-top: 10px; }
+        .stat-box.critical .stat-text { color: #fff; }
+        .stat-row { display: flex; justify-content: space-around; margin: 15px 0; flex-wrap: wrap; }
+        .stat-item { text-align: center; padding: 10px; flex: 1; min-width: 120px; }
+        .stat-item-value { font-size: 28px; font-weight: 900; color: #e74c3c; display: block; }
+        .stat-item-label { font-size: 11px; color: #7f8c8d; font-weight: 600; margin-top: 5px; }
+        .options { display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px; }
+        .option-btn { padding: 18px 20px; border: 2px solid #e1e1e1; background: #fff; border-radius: 12px; font-size: 15px; font-weight: 700; color: #2c3e50; cursor: pointer; transition: all 0.3s; text-align: left; }
+        .option-btn:hover { border-color: #27ae60; background: #e8f5e9; transform: translateX(5px); }
+        .option-btn.selected { border-color: #27ae60; background: linear-gradient(135deg, #27ae60, #2ecc71); color: #fff; }
+        .option-btn.danger:hover { border-color: #e74c3c; background: #fadbd8; }
+        .btn-group { display: flex; gap: 12px; margin-top: 20px; }
+        .btn { flex: 1; padding: 18px; border: none; border-radius: 12px; font-size: 15px; font-weight: 800; cursor: pointer; transition: all 0.3s; text-transform: uppercase; }
+        .btn-primary { background: linear-gradient(135deg, #27ae60, #2ecc71); color: #fff; box-shadow: 0 5px 20px rgba(39,174,96,0.4); }
+        .btn-primary:disabled { background: #ccc; box-shadow: none; }
+        .btn-secondary { background: #f0f0f0; color: #555; border: 2px solid #ddd; }
+        .symptoms-list { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
+        .symptom-item { padding: 15px 10px; border: 2px solid #e1e1e1; border-radius: 12px; font-size: 12px; font-weight: 700; color: #2c3e50; cursor: pointer; transition: all 0.3s; text-align: center; background: #fff; }
+        .symptom-item.selected { border-color: #27ae60; background: linear-gradient(135deg, #27ae60, #2ecc71); color: #fff; }
+        .input-group { margin-bottom: 18px; }
+        .input-label { display: block; font-size: 13px; font-weight: 700; color: #555; margin-bottom: 8px; }
+        .input-field { width: 100%; padding: 16px; border: 2px solid #e1e1e1; border-radius: 12px; font-size: 16px; background: #f9f9f9; }
+        .phone-wrapper { display: flex; border: 2px solid #e1e1e1; border-radius: 12px; overflow: hidden; background: #f9f9f9; }
+        .phone-prefix { background: #e8f5e9; color: #27ae60; padding: 16px 12px; font-weight: 800; }
+        .final-cta { text-align: center; padding: 20px; }
+        .phone-display { font-size: 24px; font-weight: 900; color: #27ae60; margin: 20px 0; display: block; }
+        .call-btn { display: inline-flex; align-items: center; gap: 10px; background: linear-gradient(135deg, #e74c3c, #c0392b); color: #fff; padding: 18px 35px; border-radius: 50px; text-decoration: none; font-weight: 800; font-size: 15px; box-shadow: 0 5px 25px rgba(231,76,60,0.4); }
+        .success-box { display: none; text-align: center; padding: 30px; }
+        .success-box.show { display: block; }
+        .disclaimer { margin-top: 25px; font-size: 10px; color: #95a5a6; text-align: center; font-style: italic; }
+        @media (max-width: 480px) { .quiz-container { padding: 90px 15px 50px; } .quiz-card { padding: 25px 15px; } }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <div class="logo">ABI<span>HAYAT</span></div>
-        <h1>Ma'lumotlaringizni qoldiring</h1>
-        <p>Sizga qulay vaqtda mutaxassisimiz bog'lanadi.</p>
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
 
-        <form id="leadForm">
-            
-            <div class="form-group">                <label for="name">Ismingiz</label>
-                <input type="text" id="name" placeholder="Masalan: Azizbek" required>
+    <div class="quiz-container">
+
+        <!-- SAHIFA 1 -->
+        <div class="quiz-card active" id="step1">
+            <div class="logo">АБИ<span>ҲАЯТ</span></div>
+            <div class="step-number">1-савол / 6</div>
+            <div class="stat-box critical">
+                <div class="stat-icon">🚨</div>
+                <div class="stat-title">ДУНЁ БЎЙИЧА ФОЖИА</div>
+                <div class="stat-number">537 МЛН</div>
+                <div class="stat-text">Дунё аҳолисининг <strong>10%</strong> қисми диабет билан касалланган!<br><br><span style="color:#fff;font-weight:800;">Ачинарлиси, сиз ҳам шу рақамлар ичидасиз!</span></div>
             </div>
-
-            <div class="form-group select-wrapper">
-                <label for="city">Viloyat / Shahar</label>
-                <select id="city" required>
-                    <option value="" disabled selected>Tanlang...</option>
-                    <option value="Toshkent sh">Toshkent sh</option>
-                    <option value="Toshkent v">Toshkent v</option>
-                    <option value="Andijon">Andijon</option>
-                    <option value="Farg'ona">Farg'ona</option>
-                    <option value="Namangan">Namangan</option>
-                    <option value="Jizzax">Jizzax</option>
-                    <option value="Qashqadaryo">Qashqadaryo</option>
-                    <option value="Surxondaryo">Surxondaryo</option>
-                    <option value="Navoiy">Navoiy</option>
-                    <option value="Samarqand">Samarqand</option>
-                    <option value="Buxoro">Buxoro</option>
-                    <option value="Xorazm">Xorazm</option>
-                    <option value="Qoraqalpog'iston">Qoraqalpog'iston</option>
-                </select>
+            <div class="question">Сизда қандли диабет борми?</div>
+            <div class="options">
+                <button class="option-btn danger" onclick="selectOption1('yes')">Ҳа, бор 😔</button>
+                <button class="option-btn" onclick="selectOption1('no')">Йўқ, лекин хавф остидаман 😰</button>
             </div>
+            <div class="btn-group">
+                <button class="btn btn-primary" id="btnNext1" onclick="nextStep(1)" disabled>Давом этиш →</button>
+            </div>
+        </div>
 
-            <div class="form-group">
-                <label for="phone">Telefon raqam</label>
-                <div class="phone-input-group">
-                    <span class="phone-prefix">+998</span>
-                    <input type="tel" id="phone" placeholder="90 123 45 67" required pattern="[0-9]{9}" maxlength="9" inputmode="numeric">
+        <!-- SAHIFA 2 -->
+        <div class="quiz-card" id="step2">
+            <div class="logo">АБИ<span>ҲАЯТ</span></div>
+            <div class="step-number">2-савол / 6</div>
+            <div class="stat-box danger">
+                <div class="stat-icon">📊</div>
+                <div class="stat-title">ДИАБЕТ ТУРЛАРИ БЎЙИЧА СТАТИСТИКА</div>
+                <div class="stat-row">
+                    <div class="stat-item"><span class="stat-item-value">12%</span><div class="stat-item-label">1-тип<br>(Инсулинга боғлиқ)</div></div>
+                    <div class="stat-item"><span class="stat-item-value">88%</span><div class="stat-item-label">2-тип<br>(ХАВФЛИРОҚ)</div></div>
                 </div>
+                <div class="stat-text"><strong style="color:#c0392b;">ДИҚҚАТ!</strong> 2-тип диабет сезилмасдан ривожланади ва 10 йил ичида ўлимга олиб келиши мумкин!</div>
             </div>
-
-            <button type="submit" class="submit-btn" id="submitBtn">So'rov yuborish</button>
-        </form>
-
-        <!-- MUVAFFAQIYAT XABARI -->
-        <div id="successBox" class="success-message">
-            <span class="success-icon">✅</span>
-            <h3>So'rov qabul qilindi!</h3>
-            <p>Sizga mutaxassislar oz muddatda aloqaga chiqishadi.</p>
+            <div class="question">Сизда диабет нечанчи типда?</div>
+            <div class="options">
+                <button class="option-btn" onclick="selectOption2('tip1')">1-тип</button>
+                <button class="option-btn danger" onclick="selectOption2('tip2')">2-тип (Энг хавфли!)</button>
+            </div>
+            <div class="btn-group">
+                <button class="btn btn-secondary" onclick="prevStep(2)">← Орқага</button>
+                <button class="btn btn-primary" id="btnNext2" onclick="nextStep(2)" disabled>Давом этиш →</button>
+            </div>
         </div>
 
-        <!-- XATO XABARI -->
-        <div id="errorBox" class="error-message"></div>
-
-        <div class="call-section">
-            <p class="call-text">Hoziroq bog'lanish uchun qo'ng'iroq qiling</p>
-            <span class="phone-display">+998 55 515 55 58</span>
-            <a href="tel:+998555155558" class="call-btn">
-                📞 Bog'lanish            </a>
+        <!-- SAHIFA 3 -->
+        <div class="quiz-card" id="step3">
+            <div class="logo">АБИ<span>ҲАЯТ</span></div>
+            <div class="step-number">3-савол / 6</div>
+            <div class="stat-box warning">
+                <div class="stat-icon">⏰</div>
+                <div class="stat-title">ЁШ БИЛАН ХАВФ ОРТАДИ</div>
+                <div class="stat-row">
+                    <div class="stat-item"><span class="stat-item-value">20-30</span><div class="stat-item-label">Ёш<br>Хавф: 5%</div></div>
+                    <div class="stat-item"><span class="stat-item-value">40-50</span><div class="stat-item-label">Ўрта<br>Хавф: 35%</div></div>
+                    <div class="stat-item"><span class="stat-item-value">60+</span><div class="stat-item-label">Катта<br>Хавф: 70%!</div></div>
+                </div>
+                <div class="stat-text"><strong style="color:#d35400;">40 ёшдан кейин</strong> ҳар 3 кишидан 1ида диабет аниқланади!</div>
+            </div>
+            <div class="input-group">
+                <label class="input-label">Ёшингиз нечада? (Хавф даражангизни билиб олинг)</label>
+                <input type="number" class="input-field" id="age" placeholder="Масалан: 45" min="1" max="100">
+            </div>
+            <div class="btn-group">
+                <button class="btn btn-secondary" onclick="prevStep(3)">← Орқага</button>
+                <button class="btn btn-primary" id="btnNext3" onclick="nextStep(3)" disabled>Давом этиш →</button>
+            </div>
         </div>
 
-        <div class="footer-note">
-            Ma'lumotlaringiz to'liq himoyalangan.
+        <!-- SAHIFA 4 -->
+        <div class="quiz-card" id="step4">
+            <div class="logo">АБИ<span>ҲАЯТ</span></div>
+            <div class="step-number">4-савол / 6</div>
+            <div class="stat-box danger">
+                <div class="stat-icon">⚠️</div>
+                <div class="stat-title">БЕЛГИЛАР СТАТИСТИКАСИ</div>
+                <div class="stat-text">Диабeti борларнинг <strong style="color:#c0392b;">85%</strong> қуйидаги белгиларни ҳис қилади!<br><br><span style="background:#fff;padding:10px;border-radius:8px;display:block;margin:10px 0;">Ўзбекистонда ҳар йили <strong>6000+</strong> инсон диабет сабаб вафот этади!</span></div>
+            </div>
+            <div class="question">Сизда қандай белгилар бор? (Барчасини белгиланг)</div>
+            <div class="symptoms-list">
+                <div class="symptom-item danger" onclick="toggleSymptom(this)">💧 Доимий чанқоқлик</div>
+                <div class="symptom-item danger" onclick="toggleSymptom(this)">🚽 Тез-тез сийиш</div>
+                <div class="symptom-item danger" onclick="toggleSymptom(this)">🍽️ Очлик ҳисси</div>
+                <div class="symptom-item danger" onclick="toggleSymptom(this)">📉 Вазн йўқотиш</div>
+                <div class="symptom-item danger" onclick="toggleSymptom(this)">😴 Чарчоқ</div>
+                <div class="symptom-item danger" onclick="toggleSymptom(this)">👁️ Кўриш хиралашиши</div>
+                <div class="symptom-item danger" onclick="toggleSymptom(this)">🩹 Яраларнинг секин битиши</div>
+                <div class="symptom-item danger" onclick="toggleSymptom(this)">🦵 Қўл-оёқ уюшиши</div>
+            </div>
+            <div class="btn-group">
+                <button class="btn btn-secondary" onclick="prevStep(4)">← Орқага</button>
+                <button class="btn btn-primary" id="btnNext4" onclick="nextStep(4)" disabled>Давом этиш →</button>
+            </div>
         </div>
-        <div class="disclaimer">
-            Dori yoki BFQ emas
+
+        <!-- SAHIFA 5 -->
+        <div class="quiz-card" id="step5">
+            <div class="logo">АБИ<span>ҲАЯТ</span></div>
+            <div class="step-number">5-савол / 6</div>
+            <div class="stat-box critical">
+                <div class="stat-icon">💀</div>
+                <div class="stat-title">ДАВОЛАНМАСА НИМА БЎЛАДИ?</div>
+                <div class="stat-row">
+                    <div class="stat-item"><span class="stat-item-value">60%</span><div class="stat-item-label">Гангрена<br>(Оёқ кесиш)</div></div>
+                    <div class="stat-item"><span class="stat-item-value">45%</span><div class="stat-item-label">Инсульт<br>(Фалаж)</div></div>
+                    <div class="stat-item"><span class="stat-item-value">40%</span><div class="stat-item-label">Инфаркт<br>(Юрак)</div></div>
+                    <div class="stat-item"><span class="stat-item-value">35%</span><div class="stat-item-label">Буйрак<br>етарли эмаслик</div></div>
+                    <div class="stat-item"><span class="stat-item-value">25%</span><div class="stat-item-label">Кўрлик<br>(100% ногиронлик)</div></div>
+                </div>
+                <div class="stat-text"><span style="background:rgba(255,255,255,0.2);padding:15px;border-radius:10px;display:block;font-weight:800;font-size:15px;">⚠️ ҲАР 5 ДАҚИҚАДА 1 КИШИ ДИАБЕТ ТУФАЙЛИ НОГИРОН БЎЛАДИ!</span></div>
+            </div>
+            <div class="final-cta">
+                <h2>БУ СИЗНИНГ ТАҚДИРИНГИЗ БЎЛСИНМИ?</h2>
+                <p>Вақт йўқотманг! Ҳозир ҳаракат қилсангиз, бу оқибатларнинг <strong>90%</strong> олдини олиш мумкин!</p>
+                <span class="phone-display">📞 +998 55 515 55 58</span>
+                <a href="tel:+998555155558" class="call-btn">📞 Ҳозир қўнғироқ қилиш</a>
+            </div>
+            <div class="btn-group">
+                <button class="btn btn-secondary" onclick="prevStep(5)">← Орқага</button>
+                <button class="btn btn-primary" onclick="nextStep(5)">Маълумотларни қолдириш →</button>
+            </div>
         </div>
+
+        <!-- SAHIFA 6 -->
+        <div class="quiz-card" id="step6">
+            <div class="logo">АБИ<span>ҲАЯТ</span></div>
+            <div class="step-number">6-савол / 6</div>
+            <div class="stat-box" style="background: linear-gradient(135deg, #d5f5e3 0%, #abebc6 100%); border-left-color: #27ae60;">
+                <div class="stat-icon">✅</div>
+                <div class="stat-title" style="color:#27ae60;">ОХИРГИ ҚАДАМ</div>
+                <div class="stat-text">Маълумотларингизни қолдиринг ва <strong>15 дақиқа ичида</strong> мутахассисимиз боғланади.<br><br><span style="color:#27ae60;font-weight:800;">🎁 Биринчи маслаҳат БЕПУЛ!</span></div>
+            </div>
+            <form id="leadForm">
+                <div class="input-group"><label class="input-label">Исмингиз</label><input type="text" class="input-field" id="name" placeholder="Масалан: Азизбек" required></div>
+                <div class="input-group"><label class="input-label">Яшаш манзилингиз</label>
+                    <select class="input-field" id="city" required>
+                        <option value="" disabled selected>Танланг...</option>
+                        <option value="Тошкент ш">Тошкент ш</option>
+                        <option value="Тошкент в">Тошкент в</option>
+                        <option value="Андижон">Андижон</option>
+                        <option value="Фарғона">Фарғона</option>
+                        <option value="Наманган">Наманган</option>
+                        <option value="Жиззах">Жиззах</option>
+                        <option value="Қашқадарё">Қашқадарё</option>
+                        <option value="Сурхондарё">Сурхондарё</option>
+                        <option value="Навоий">Навоий</option>
+                        <option value="Самарқанд">Самарқанд</option>
+                        <option value="Бухоро">Бухоро</option>
+                        <option value="Хоразм">Хоразм</option>
+                        <option value="Қорақалпоғистон">Қорақалпоғистон</option>
+                    </select>
+                </div>
+                <div class="input-group"><label class="input-label">Телефон рақам</label>
+                    <div class="phone-wrapper">
+                        <span class="phone-prefix">+998</span>
+                        <input type="tel" class="input-field" id="phone" placeholder="90 123 45 67" maxlength="9" required>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width:100%;margin-top:15px;">Сўров юбориш</button>
+            </form>
+            <div class="success-box" id="successBox">
+                <div class="success-icon">✅</div>
+                <div class="success-title">Раҳмат!</div>
+                <div class="success-text">15 дақиқада боғланамиз.</div>
+            </div>
+            <div class="disclaimer">Дори ёки БФҚ эмас</div>
+        </div>
+
     </div>
 
     <script>
-        // ⚙️ TELEGRAM SOZLAMALARI
-        const botToken = "8632869139:AAFlFOuoGZyl3bVQtD6glV9HUvooQYulraQ";
-        const personalChatId = "1691140865";      // Sizning shaxsiy ID (botga)
-        const groupChatId = "-1003880590313";     // Guruh ID
-        const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
+        let currentStep = 1;
+        let answers = {};
 
-        // Xabar yuborish funksiyasi
-        async function sendToTelegram(chatId, text) {
-            const response = await fetch(url, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    chat_id: chatId,
-                    text: text,
-                    parse_mode: 'Markdown'
-                })
-            });
-            
-            const data = await response.json();
-            
-            if (!response.ok) {
-                throw new Error(data.description || `HTTP error! status: ${response.status}`);
-            }
-            
-            return data;
+        function updateProgress() {
+            document.getElementById('progressBar').style.width = (currentStep / 6 * 100) + '%';
         }
 
-        document.getElementById('leadForm').addEventListener('submit', async function(e) {
+        function nextStep(current) {
+            document.getElementById('step' + current).classList.remove('active');
+            currentStep = current + 1;
+            document.getElementById('step' + currentStep).classList.add('active');
+            updateProgress();
+            window.scrollTo(0, 0);
+        }
+
+        function prevStep(current) {
+            document.getElementById('step' + current).classList.remove('active');
+            currentStep = current - 1;
+            document.getElementById('step' + currentStep).classList.add('active');
+            updateProgress();
+            window.scrollTo(0, 0);
+        }
+
+        function selectOption1(type) {
+            answers.step1 = type === 'yes' ? 'Ҳа, бор' : 'Йўқ, лекин хавф остидаман';
+            document.getElementById('btnNext1').disabled = false;
+        }
+
+        function selectOption2(type) {
+            answers.step2 = type === 'tip1' ? '1-тип' : '2-тип (Энг хавфли!)';
+            document.getElementById('btnNext2').disabled = false;
+        }
+
+        function toggleSymptom(el) {
+            el.classList.toggle('selected');
+            const count = document.querySelectorAll('#step4 .symptom-item.selected').length;
+            document.getElementById('btnNext4').disabled = count === 0;
+        }
+
+        // ==================== TELEGRAM YUBORISH (ID lar qo'shildi) ====================
+        function submitForm(e) {
             e.preventDefault();
-            
-            const btn = document.getElementById('submitBtn');
-            const errorBox = document.getElementById('errorBox');
-            const name = document.getElementById('name').value;
+            const name = document.getElementById('name').value.trim();
             const city = document.getElementById('city').value;
-            const phoneInput = document.getElementById('phone').value;
-            const fullPhone = "+998 " + phoneInput;
+            const phone = '+998 ' + document.getElementById('phone').value.trim();
+            const age = document.getElementById('age') ? document.getElementById('age').value : '-';
+            let symptoms = [];
+            document.querySelectorAll('#step4 .symptom-item.selected').forEach(s => symptoms.push(s.innerHTML));
 
-            // Xato xabarini yashirish            errorBox.style.display = 'none';
-            
-            // Tugmani o'chirib turamiz
-            btn.disabled = true;
-            btn.innerText = "Yuborilmoqda...";
+            const message = `🚨 *ЯНГИ МУРОЖААТ*\n\n👤 *Исми:* ${name}\n📍 *Шаҳар:* ${city}\n📞 *Телефон:* ${phone}\n🎂 *Ёши:* ${age}\n💉 *Тип:* ${answers.step2 || '-'}\n⚠️ *Белгилар:* ${symptoms.length ? symptoms.join(', ') : '-'}\n1-савол: ${answers.step1 || '-'}`;
 
-            // Telegramga yuborish matni
-            const text = `
-📢 *Yangi murojaat (TG ADS)*
+            const token = '8632869139:AAFlFOuoGZyl3bVQtD6glV9HUvooQYulraQ';
+            const url = `https://api.telegram.org/bot${token}/sendMessage`;
 
-👤 *Ismi:* ${name}
-📍 *Viloyat:* ${city}
-📞 *Telefon:* ${fullPhone}
-            `.trim();
-
-            try {
-                // Ikki joyga parallel yuborish (Bot + Guruh)
-                const [personalRes, groupRes] = await Promise.all([
-                    sendToTelegram(personalChatId, text),
-                    sendToTelegram(groupChatId, text)
-                ]);
-
-                // Muvaffaqiyatli yuborilganda
+            fetch(url, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ chat_id: '1691140865', text: message, parse_mode: 'Markdown' })
+            }).then(() => {
+                return fetch(url, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ chat_id: '-1003781391671', text: message, parse_mode: 'Markdown' })
+                });
+            }).then(() => {
                 document.getElementById('leadForm').style.display = 'none';
-                document.getElementById('successBox').style.display = 'block';
-                document.querySelector('h1').style.display = 'none';
-                document.querySelector('p').style.display = 'none';
+                document.getElementById('successBox').classList.add('show');
+            }).catch(() => {
+                alert('Xatolik! Qayta urinib ko‘ring.');
+            });
+        }
 
-            } catch (error) {
-                console.error('Xatolik:', error);
-                errorBox.textContent = '⚠️ Xatolik: ' + error.message;
-                errorBox.style.display = 'block';
-                btn.disabled = false;
-                btn.innerText = "So'rov yuborish";
+        // Sahifa yuklanganda
+        document.addEventListener('DOMContentLoaded', function() {
+            updateProgress();
+            const ageInput = document.getElementById('age');
+            if (ageInput) {
+                ageInput.addEventListener('input', function() {
+                    document.getElementById('btnNext3').disabled = !this.value || this.value < 1 || this.value > 100;
+                });
             }
-        });
-
-        // Telefon raqamga faqat raqam kiritish
-        document.getElementById('phone').addEventListener('input', function (e) {
-            this.value = this.value.replace(/[^0-9]/g, '');
+            document.getElementById('phone').addEventListener('input', function() {
+                this.value = this.value.replace(/[^0-9]/g, '');
+            });
+            document.getElementById('leadForm').addEventListener('submit', submitForm);
         });
     </script>
-
 </body>
 </html>

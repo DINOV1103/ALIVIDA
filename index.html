@@ -179,10 +179,16 @@
                 <div class="stat-text"><span style="background:rgba(255,255,255,0.2);padding:15px;border-radius:10px;display:block;font-weight:800;font-size:15px;">⚠️ ҲАР 5 ДАҚИҚАДА 1 КИШИ ДИАБЕТ ТУФАЙЛИ НОГИРОН БЎЛАДИ!</span></div>
             </div>
             <div class="final-cta">
+<div class="cta-info" style="margin-top:20px;padding:18px;border-radius:12px;background:rgba(255,255,255,0.15);font-weight:700;">
+⏳ Мутахассисларимиз сиз қолдирган маълумот асосида <strong>15 дақиқа ичида</strong> сиз билан боғланишади.
+<br><br>
+📋 Маълумот қолдириш орқали сиз шахсий маслаҳат ва тавсиялар оласиз.
+</div>
+
                 <h2>БУ СИЗНИНГ ТАҚДИРИНГИЗ БЎЛСИНМИ?</h2>
                 <p>Вақт йўқотманг! Ҳозир ҳаракат қилсангиз, бу оқибатларнинг <strong>90%</strong> олдини олиш мумкин!</p>
-                <span class="phone-display">📞 +998 55 515 55 58</span>
-                <a href="tel:+998555155558" class="call-btn">📞 Ҳозир қўнғироқ қилиш</a>
+                
+                
             </div>
             <div class="btn-group">
                 <button class="btn btn-secondary" onclick="prevStep(5)">← Орқага</button>
@@ -289,19 +295,13 @@
 
             const message = `🚨 *ЯНГИ МУРОЖААТ*\n\n👤 *Исми:* ${name}\n📍 *Шаҳар:* ${city}\n📞 *Телефон:* ${phone}\n🎂 *Ёши:* ${age}\n💉 *Тип:* ${answers.step2 || '-'}\n⚠️ *Белгилар:* ${symptoms.length ? symptoms.join(', ') : '-'}\n1-савол: ${answers.step1 || '-'}`;
 
-            const token = '8632869139:AAFlFOuoGZyl3bVQtD6glV9HUvooQYulraQ';
+            const token = '8330499154:AAGL_hAbddELn4NqhdpN2e6bKKasWSXLKsg';
             const url = `https://api.telegram.org/bot${token}/sendMessage`;
 
             fetch(url, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ chat_id: '1691140865', text: message, parse_mode: 'Markdown' })
-            }).then(() => {
-                return fetch(url, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ chat_id: '-1003781391671', text: message, parse_mode: 'Markdown' })
-                });
             }).then(() => {
                 document.getElementById('leadForm').style.display = 'none';
                 document.getElementById('successBox').classList.add('show');
